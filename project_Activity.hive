@@ -1,0 +1,9 @@
+CREATE TABLE episodes1 (name STRING, line STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' TBLPROPERTIES ("skip.header.line.count"="2");
+LOAD DATA LOCAL INPATH '/root/inputs/episodeIV_dialouges.txt' INTO TABLE episodes1;
+LOAD DATA LOCAL INPATH '/root/inputs/episodeV_dialouges.txt' INTO TABLE episodes1;
+LOAD DATA LOCAL INPATH '/root/inputs/episodeVI_dialouges.txt' INTO TABLE episodes1;
+insert overwrite directory '/user/root/output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT name, COUNT(name) AS no_of_lines from episodes1i GROUP BY name ORDER BY no_of_lines DESC;
+
